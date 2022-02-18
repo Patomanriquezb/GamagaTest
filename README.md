@@ -1,1 +1,13 @@
 # GamagaTest
+
+El sistema de generación de laberinto está basado en distintas unidades conformadas por cubos, las que componen una sección del camino del laberito a conformar. Estas unidades, llamadas Bloques, son Prefab Variants de la original que contiene 9 cubos que cubren toda la sección y por ende no representa un camino a seguir. En las variantes, algunos de estos cubos son desactivados para generar la sección del camino correspondiente a cada uno.
+
+Al generar un laberinto, primero se evalua si es que ya se inicializó este mismo. La inicialización del laberinto comprende la instanciación de la cantidad de bloques necesaria para la formación del mismo, por lo que al cambiar el tamaño deseado del laberinto, se debe inicializazr nuevamente. De lo contrario, si se desea mantener el tamaño y solamente se desea generar un nuevo camino, entoncces el generador reorganizará los bloques para formar un nuevo laberinto.
+
+Las secciones, o bloques, pueden ser fácilmente reemplazadas por nuevos modelos, siempre y cuando se mantengan las configuraciones que corresponden a cada tipo de bloque, es decir, a cada sección del camino. Además, permite remover tipos de bloque o agregar nuevos tipos sin mayores dificultades.
+
+El algoritmo de generación responsabiliza a cada bloque el elegir y posicionar sus bloques adjacentes, dependiendo de sus caminos disponibles. Por ejemplo, si un bloque tiene un camino abierto hacia la derecha, intentará posicionar un bloque en dicha dirección, el cual debe tener por obligación una abertura que conecte a las dos secciones del camino.
+
+En primer lugar el algoritmo genera bloques a partir de la entrada del laberinto. En segundo, determina la salida del mismo y genera más bloques de ser necesario. En este punto, el algoritmo busca si es que hay una solución disponible para el laberinto y, si no la encuentra, realiza un Fix que une el camino generado desde la entrada con el camino generado desde la salida. En la mayor parte de los casos, esto es suficiente para tener un laberinto correctamente generado, por lo que una segunda iteración de la búsqueda de la solución debiese ser positiva. De lo contrario, esto significaría que ambas secciones del camino (desde la entrada y desde la salida) están separadas por un espacio vacío de uno o más bloques de separación, por lo que es más simple generar un laberinto nuevo que intentar conectarlos.
+
+Las consideraciones de cantidad de bloques en el laberinto se estiman a partir de la medida del lado, pues el laberinto es cuadrado en su extensión horizontal. Por razones naturales, el mínimo es 2 y para evitar sobreexigir a los dispositivos, el máximo de esta prueba es de 50 bloques por lado. recordar que cada bloque está conformado por 9 cubos.
